@@ -38,10 +38,14 @@ class PDFManager:
 
         # # lower-casing
         pdf_output = [pdf_output[i].lower() for i in range(totalpages)]
-        pdf_output = [[self.ps.stem(word) for word in sentence.split(" ")] for sentence in pdf_output]
-        pdf_output = [' '.join(pdf_output[i]) for i in range(len(pdf_output))]
+        pdf_output_stemmed = [[self.ps.stem(word) for word in sentence.split(" ")] for sentence in pdf_output]
 
-        return pdf_output, totalpages
+        search_data = [' '.join(pdf_output_stemmed[i]) for i in range(len(pdf_output_stemmed))]
+
+        pdf_output = ' '.join(pdf_output)
+        word_cloud = PDFManager.word_count(pdf_output)
+
+        return word_cloud, search_data, totalpages
 
     def get_string(self):
         '''Transform a PDF file to a list of string pages'''
@@ -75,13 +79,15 @@ class PDFManager:
 
         t = time.process_time()
         # clean the first pdf
-        pdf_output, totalpages = self.clean()
+        word_cloud, pdf_output, totalpages = self.clean()
+
+        # print(word_cloud)
 
         # combine the pdf
         combined_pdf = [' '.join(pdf_output)]
 
         try:
-            pdf_output, totalpages = self.clean()
+            word_cloud, pdf_output, totalpages = self.clean()
             combined_pdf.append(' '.join(pdf_output))
         except:
             print('problematic file, %s', self.url)
@@ -89,7 +95,20 @@ class PDFManager:
         finally:
             duration = time.process_time() - t
 
-        return combined_pdf[0], duration
+        return word_cloud, combined_pdf[0], duration
+
+    @staticmethod
+    def word_count(str):
+        counts = dict()
+        words = str.split()
+
+        for word in words:
+            if word in counts:
+                counts[word] += 1
+            else:
+                counts[word] = 1
+
+        return counts
 
     def download(self):
         '''Download a PDF file via an URL'''

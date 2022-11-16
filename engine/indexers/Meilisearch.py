@@ -15,10 +15,12 @@ class Meilisearch(IndexDriver):
         index = self.client.index(index_name)
         return index.search(query)
 
-    def index(self, index_name, uuid, data):
+    def index(self, index_name, uuid, data, word_cloud):
         index = self.client.index(index_name)
+        print(word_cloud)
         index.add_documents([{
             'id': uuid,
-            'search_data': data
+            'search_data': data,
+            'word_cloud': word_cloud
         }])
         return True
