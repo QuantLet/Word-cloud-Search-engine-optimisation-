@@ -14,7 +14,7 @@ engine = SearchEngine(search_driver)
 @app.route('/search', methods=['GET'])
 def search():
     results = engine.search(request.args.get("q"))
-    ids = [result['courselet_id'] for result in results]
+    ids = [result['id'] for result in results]
     response = { 'status': 200, 'courseletIds': ids }
     return app.response_class(
         response=json.dumps(response),
