@@ -26,7 +26,9 @@ def search():
 def index_one():
     courselet_id = request.json["courselet_id"]
     pdf_url = request.json["pdf_url"]
-    success, data = engine.index(courselet_id, pdf_url)
+    title = request.json["title"]
+    author = request.json["author"]
+    success, data = engine.index(courselet_id, pdf_url, title, author)
     if success:
         status = 200
     else:
