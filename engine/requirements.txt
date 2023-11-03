@@ -1,5 +1,5 @@
 Flask==2.2.2
-meilisearch==0.22.2
+meilisearch==0.28.2
 nltk==3.7
 PyPDF2==2.11.1
 requests==2.28.1
