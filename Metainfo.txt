@@ -8,4 +8,4 @@ Keywords:            'NLP, word cloud, search engine optimisation, SEO'
 
 Author[New]:         Ivan Kotik, Raul Bag
 
-Submitted:  24.01.2024
+Submitted:  24.01.2022
